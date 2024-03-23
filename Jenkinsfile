@@ -3,6 +3,7 @@ pipeline {
 
     parameters {
         choice(name: 'DEPLOY', choices: ['dev', 'test', 'prod'], description: 'Deployment environment')
+        string(name: 'VERSION', defaultValue: '1.0.0', description: 'Versionu seçiniz')
     }
 
     stages {
@@ -19,7 +20,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
                     sh "echo Derleme ve image build ve push işlemi başlatılıyor"
-                    sh "./mvnw package -Pprod -DskipTests jib:build -Djib.to.image=btwdevops/jenkinsders5-dev:pipeline1.0.0"
+                    sh "./mvnw package -Pprod -DskipTests jib:build -Djib.to.image=btwdevops/jenkinsders5-dev:pipeline-${params.VERSION}"
                 }
             }
         }
@@ -34,7 +35,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
                     sh "echo Derleme ve image build ve push işlemi başlatılıyor"
-                    sh "./mvnw package -Pprod -DskipTests jib:build -Djib.to.image=btwdevops/jenkinsders5-test:pipeline1.0.0"
+                    sh "./mvnw package -Pprod -DskipTests jib:build -Djib.to.image=btwdevops/jenkinsders5-test:pipeline-${params.VERSION}"
                 }
             }
         }
@@ -49,7 +50,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
                     sh "echo Derleme ve image build ve push işlemi başlatılıyor"
-                    sh "./mvnw package -Pprod -DskipTests jib:build -Djib.to.image=btwdevops/jenkinsders5-prod:pipeline1.0.0"
+                    sh "./mvnw package -Pprod -DskipTests jib:build -Djib.to.image=btwdevops/jenkinsders5-prod:pipeline-${params.VERSION}"
                 }
             }
         }
