@@ -21,8 +21,10 @@ pipeline {
 
 
             steps {
-              def script = load 'script.groovy'
-              script.devBuild()
+              script {   
+                def script = load 'script.groovy'
+                script.devBuild()
+              }  
             }
         }
         stage('Test') {
@@ -32,8 +34,10 @@ pipeline {
                 }
             }
             steps {
+              script {   
                 def script = load 'script.groovy'
                 script.testBuild()
+              }   
  
             }
         }
@@ -44,8 +48,10 @@ pipeline {
                 }
             }
             steps {
+              script {   
                def script = load 'script.groovy'                
                script.prodBuild()
+              } 
             }
         }
     }
