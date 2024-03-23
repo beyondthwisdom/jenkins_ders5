@@ -2,15 +2,17 @@ pipeline {
     agent any
 
     parameters {
-        choice(name: 'DEPLOY', choices: ['dev', 'test', 'prod'], description: 'Deployment environment')
         string(name: 'VERSION', defaultValue: '1.0.0', description: 'Versionu seçiniz')
+        booleanParam(name: 'DEV', defaultValue: true, description: 'Deploy to development?')
+        booleanParam(name: 'TEST', defaultValue: true, description: 'Deploy to test?')
+        booleanParam(name: 'PROD', defaultValue: true, description: 'Deploy to prod?')
     }
 
     stages {
         stage('Dev') {
             when {
                 expression {
-                    params.DEPLOY == 'dev'
+                    params.DEV 
                 }
             }
 
@@ -27,7 +29,7 @@ pipeline {
         stage('Test') {
             when {
                 expression {
-                    params.DEPLOY == 'test'
+                    params.TEST
                 }
             }
             steps {
@@ -42,7 +44,7 @@ pipeline {
         stage('Prod') {
             when {
                 expression {
-                    params.DEPLOY == 'prod'
+                    params.PROD
                 }
             }
             steps {
