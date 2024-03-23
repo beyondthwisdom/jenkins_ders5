@@ -17,7 +17,9 @@ pipeline {
         stage('Prod') {
             steps {
                 echo 'Prod Building...'
-                // Buraya deploy komutlarınızı ekleyin
+                withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                }
             }
         }
     }
