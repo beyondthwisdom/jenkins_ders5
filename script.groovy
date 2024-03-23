@@ -1,5 +1,5 @@
 def devBuild(){
-    echo 'Dev Building...'
+    sh "echo Dev Building..."
     withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
         sh "echo $PASS | docker login -u $USER --password-stdin"
         sh "echo Derleme ve image build ve push işlemi başlatılıyor"
@@ -8,7 +8,7 @@ def devBuild(){
 }
 
 def testBuild(){
-    echo 'Test Building...'
+    sh "echo Test Building..."
     withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
         sh "echo $PASS | docker login -u $USER --password-stdin"
         sh "echo Derleme ve image build ve push işlemi başlatılıyor"
@@ -17,7 +17,7 @@ def testBuild(){
 }
 
 def prodBuild(){
-    echo 'Prod Building...'
+    sh "echo Prod Building..."
     withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
         sh "echo $PASS | docker login -u $USER --password-stdin"
         sh "echo Derleme ve image build ve push işlemi başlatılıyor"
