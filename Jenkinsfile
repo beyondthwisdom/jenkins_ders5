@@ -1,5 +1,7 @@
 pipeline {
     agent any
+    
+    def script
 
     parameters {
         string(name: 'VERSION', defaultValue: '1.0.0', description: 'Versionu seçiniz')
@@ -9,6 +11,14 @@ pipeline {
     }
 
     stages {
+        
+
+        stage('Init') {
+            steps {
+              script = load 'script.groovy'
+            }
+        }
+
         stage('Dev') {
             when {
                 expression {
@@ -18,12 +28,7 @@ pipeline {
 
 
             steps {
-                echo 'Dev Building...'
-                withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh "echo Derleme ve image build ve push işlemi başlatılıyor"
-                    sh "./mvnw package -Pprod -DskipTests jib:build -Djib.to.image=btwdevops/jenkinsders5-dev:pipeline-${params.VERSION}"
-                }
+              script.devBuild()
             }
         }
         stage('Test') {
@@ -33,12 +38,9 @@ pipeline {
                 }
             }
             steps {
-                echo 'Test Building...'
-                withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh "echo Derleme ve image build ve push işlemi başlatılıyor"
-                    sh "./mvnw package -Pprod -DskipTests jib:build -Djib.to.image=btwdevops/jenkinsders5-test:pipeline-${params.VERSION}"
-                }
+
+                script.testBuild()
+ 
             }
         }
         stage('Prod') {
@@ -48,12 +50,7 @@ pipeline {
                 }
             }
             steps {
-                echo 'Prod Building...'
-                withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh "echo Derleme ve image build ve push işlemi başlatılıyor"
-                    sh "./mvnw package -Pprod -DskipTests jib:build -Djib.to.image=btwdevops/jenkinsders5-prod:pipeline-${params.VERSION}"
-                }
+               script.prodBuild()
             }
         }
     }
