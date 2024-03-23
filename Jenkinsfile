@@ -1,8 +1,19 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(name: 'DEPLOY', choices: ['dev', 'test', 'prod'], description: 'Deployment environment')
+    }
+
     stages {
         stage('Dev') {
+            when {
+                expression {
+                    params.DEPLOY == 'dev'
+                }
+            }
+
+
             steps {
                 echo 'Dev Building...'
                 withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
@@ -13,6 +24,11 @@ pipeline {
             }
         }
         stage('Test') {
+            when {
+                expression {
+                    params.DEPLOY == 'test'
+                }
+            }
             steps {
                 echo 'Test Building...'
                 withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
@@ -23,6 +39,11 @@ pipeline {
             }
         }
         stage('Prod') {
+            when {
+                expression {
+                    params.DEPLOY == 'prod'
+                }
+            }
             steps {
                 echo 'Prod Building...'
                 withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
