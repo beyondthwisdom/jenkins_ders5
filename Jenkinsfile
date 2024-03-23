@@ -1,7 +1,6 @@
 pipeline {
     agent any
-    
-    def script
+
 
     parameters {
         string(name: 'VERSION', defaultValue: '1.0.0', description: 'Versionu seçiniz')
@@ -13,12 +12,6 @@ pipeline {
     stages {
         
 
-        stage('Init') {
-            steps {
-              script = load 'script.groovy'
-            }
-        }
-
         stage('Dev') {
             when {
                 expression {
@@ -28,6 +21,7 @@ pipeline {
 
 
             steps {
+              def script = load 'script.groovy'
               script.devBuild()
             }
         }
@@ -38,7 +32,7 @@ pipeline {
                 }
             }
             steps {
-
+                def script = load 'script.groovy'
                 script.testBuild()
  
             }
@@ -50,6 +44,7 @@ pipeline {
                 }
             }
             steps {
+               def script = load 'script.groovy'                
                script.prodBuild()
             }
         }
