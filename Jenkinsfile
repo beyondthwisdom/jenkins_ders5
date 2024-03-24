@@ -30,8 +30,8 @@ pipeline {
         stage('Test') {
             when {
                 expression {
-                    params.TEST
-                    
+                    params.TEST 
+
                 }
             }
             steps {
