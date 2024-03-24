@@ -17,7 +17,7 @@ pipeline {
         stage('Dev') {
             when {
                 expression {
-                    params.DEV 
+                    params.DEV  
                 }
             }
 
