@@ -25,7 +25,7 @@ pipeline {
             steps {
               script {   
                  buildAndPublish()
-                 
+
               }  
             }
         }
@@ -39,6 +39,7 @@ pipeline {
               script {   
                 def script = load 'script.groovy'
                 script.testBuild()
+                
               }   
  
             }
