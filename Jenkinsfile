@@ -56,4 +56,12 @@ pipeline {
             }
         }
     }
+        post {
+        success {
+            discordSend description: 'Build succeeded', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD'
+        }
+        failure {
+            discordSend description: 'Build failed', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD'
+        }
+    }
 }
