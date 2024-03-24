@@ -1,5 +1,3 @@
-
-
 def devBuild(){
     echo 'Dev Building...'
     withCredentials([usernamePassword(credentialsId: 'docker-credential', usernameVariable: 'USER', passwordVariable: 'PASS')]) {

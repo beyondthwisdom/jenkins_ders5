@@ -22,8 +22,10 @@ pipeline {
 
             steps {
               script {   
+                discordSend description: 'Dev Build Started', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD' 
                 def script = load 'script.groovy'
                 script.devBuild()
+                discordSend description: 'Dev Build succeeded', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD'
               }  
             }
         }
@@ -36,8 +38,10 @@ pipeline {
             }
             steps {
               script {   
+                discordSend description: 'Test Build Started', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD' 
                 def script = load 'script.groovy'
                 script.testBuild()
+                discordSend description: 'Test Build succeeded', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD'
               }   
  
             }
@@ -50,13 +54,15 @@ pipeline {
             }
             steps {
               script {   
+               discordSend description: 'Prod Build Started', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD' 
                def script = load 'script.groovy'                
                script.prodBuild()
+               discordSend description: 'Prod Build succeeded', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD'
               } 
             }
         }
     }
-        post {
+    post {
         success {
             discordSend description: 'Build succeeded', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD'
         }
@@ -64,4 +70,6 @@ pipeline {
             discordSend description: 'Build failed', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD'
         }
     }
+
+
 }
