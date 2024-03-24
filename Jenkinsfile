@@ -18,6 +18,7 @@ pipeline {
             when {
                 expression {
                     params.DEV 
+                    
                 }
             }
 
@@ -39,7 +40,7 @@ pipeline {
               script {   
                 def script = load 'script.groovy'
                 script.testBuild()
-                
+
               }   
  
             }
