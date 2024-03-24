@@ -1,3 +1,5 @@
+@Library('jenkins-shared-library')_
+
 pipeline {
     agent any
 
@@ -22,8 +24,8 @@ pipeline {
 
             steps {
               script {   
-                def script = load 'script.groovy'
-                script.devBuild()
+                 buildAndPublish()
+                 
               }  
             }
         }
