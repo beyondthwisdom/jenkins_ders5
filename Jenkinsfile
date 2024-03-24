@@ -3,10 +3,10 @@ pipeline {
 
 
     parameters {
-        string(name: 'VERSION', defaultValue: '1.0.0', description: 'Versionu seçiniz')
+        string(name: 'VERSION', defaultValue: '8.0.0', description: 'Versionu seçiniz')
         booleanParam(name: 'DEV', defaultValue: true, description: 'Deploy to development?')
-        booleanParam(name: 'TEST', defaultValue: true, description: 'Deploy to test?')
-        booleanParam(name: 'PROD', defaultValue: true, description: 'Deploy to prod?')
+        booleanParam(name: 'TEST', defaultValue: false, description: 'Deploy to test?')
+        booleanParam(name: 'PROD', defaultValue: false, description: 'Deploy to prod?')
     }
 
     stages {
@@ -64,10 +64,10 @@ pipeline {
     }
     post {
         success {
-            discordSend description: 'Build succeeded', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD'
+            discordSend description: 'Operation succeeded', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD'
         }
         failure {
-            discordSend description: 'Build failed', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD'
+            discordSend description: 'Operation failed', webhookURL: 'https://discord.com/api/webhooks/1221413538577514516/mEI4OXE0EjpcXasZnqRm406wBMF9slkw_LBVtCqU6tyQIw7amwdtthQ2ch3gRdCeyxVD'
         }
     }
 
